@@ -411,7 +411,7 @@ const ProductsScreen = ({ jwt }) => {
                             <td>{producto.peso}</td>
                             <td>{producto.cantidad}</td>
                             <td>{formatDate(producto.vencimiento)}</td> 
-                            <td>{producto.categoria.nombre}</td>
+                            <td>{producto.categoria}</td>
                             <td>
                                 <Button variant='danger' onClick={() => handleDeleteProduct(producto._id)}>Eliminar</Button>
                                 <Button variant='warning' onClick={() => {
