@@ -356,7 +356,7 @@ const ProductsScreen = ({ jwt }) => {
                             <Form.Label>Vencimiento</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Ingrese la fecha de vencimiento"
+                                placeholder="Ingrese la fecha de vencimiento AA-MM-DD"
                                 value={editarVencimiento}
                                 onChange={(event) => setEditarVencimiento(event.target.value)}
                             />
