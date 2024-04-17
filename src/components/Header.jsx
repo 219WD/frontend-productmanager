@@ -2,14 +2,16 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Container, Nav, Navbar } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import Logo from "../assets/logo.png"
 
 function Header({ authenticated = false, isAdmin = false, changeJwt }) {
   return (
     <>
-      <Navbar expand="lg" className="bg-info">
+      <Navbar expand="lg" style={{background: "#d7d7d7"}}>
         <Container>
           <Link to="/" className="text-decoration-none">
             <Navbar.Brand as="span" className="text-white">
+              <img src={Logo} alt="" style={{width:"50px"}}/>
               Stock Manager
             </Navbar.Brand>
           </Link>

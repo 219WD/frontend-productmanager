@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import Swal from 'sweetalert2';
+import Logo from "../assets/logo.png"
+import "../pages/Register.css"
 
 const RegisterScreen = () => {
     const [username, setUsername] = useState("");
@@ -56,73 +58,78 @@ const RegisterScreen = () => {
                 });
             });
 
-            setUsername("");
-            setPassword("");
-            setEmail("");
-            setNombre("");
-            setApellido("");
+        setUsername("");
+        setPassword("");
+        setEmail("");
+        setNombre("");
+        setApellido("");
     }
 
     return (
-        <Container className="mb-5">
-            <h1>Registro</h1>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleRegister}>
-                <Form.Group className="mb-3" controlId="formBasicUser">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter username"
-                        onChange={(event) => setUsername(event.target.value)}
-                        value={username}
-                    />
-                </Form.Group>
+        <div className="registro-container mb-5">
+            <div className="registro">
+                <h1>Registro</h1>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Form onSubmit={handleRegister}>
+                    <Form.Group className="mb-3" controlId="formBasicUser">
+                        <Form.Label>Usuario</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingresar usuario"
+                            onChange={(event) => setUsername(event.target.value)}
+                            value={username}
+                        />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        onChange={(event) => setPassword(event.target.value)}
-                        value={password}
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Ingresar contraseña"
+                            onChange={(event) => setPassword(event.target.value)}
+                            value={password}
+                        />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        onChange={(event) => setEmail(event.target.value)}
-                        value={email}
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="Ingresar email"
+                            onChange={(event) => setEmail(event.target.value)}
+                            value={email}
+                        />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicNombre">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter nombre"
-                        onChange={(event) => setNombre(event.target.value)}
-                        value={nombre}
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicNombre">
+                        <Form.Label>Nombre</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingresar nombre"
+                            onChange={(event) => setNombre(event.target.value)}
+                            value={nombre}
+                        />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicApellido">
-                    <Form.Label>Apellido</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter apellido"
-                        onChange={(event) => setApellido(event.target.value)}
-                        value={apellido}
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicApellido">
+                        <Form.Label>Apellido</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingresar apellido"
+                            onChange={(event) => setApellido(event.target.value)}
+                            value={apellido}
+                        />
+                    </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    Registro
-                </Button>
-            </Form>
-        </Container>
+                    <Button className="w-100" variant="primary" type="submit">
+                        Registro
+                    </Button>
+                </Form>
+            </div>
+            <div className="img-register">
+                <img src={Logo} alt="" style={{ width: "20vw" }} />
+            </div>
+        </div>
     );
 }
 

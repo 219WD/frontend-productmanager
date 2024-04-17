@@ -123,6 +123,19 @@ const ProductsScreen = ({ jwt }) => {
 
     }
 
+    
+    //Formatear Fecha
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString();
+        month = month.length === 1 ? '0' + month : month;
+        let day = date.getDate().toString();
+        day = day.length === 1 ? '0' + day : day;
+        return `${year}-${month}-${day}`;
+    };
+
+
     // Manejadores de cambios en el formulario
     const handleChangeMarca = (event) => {
         setMarca(event.target.value)
@@ -397,8 +410,8 @@ const ProductsScreen = ({ jwt }) => {
                             <td>{producto.descripcion}</td>
                             <td>{producto.peso}</td>
                             <td>{producto.cantidad}</td>
-                            <td>{producto.vencimiento}</td>
-                            <td>{producto.categoria}</td>
+                            <td>{formatDate(producto.vencimiento)}</td> 
+                            <td>{producto.categoria.nombre}</td>
                             <td>
                                 <Button variant='danger' onClick={() => handleDeleteProduct(producto._id)}>Eliminar</Button>
                                 <Button variant='warning' onClick={() => {

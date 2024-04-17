@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+import Logo from "../assets/logo.png"
+import "../pages/Login.css"
 
 const LoginScreen = ({ changeJwt }) => {
   const [username, setUsername] = useState("");
@@ -53,34 +55,41 @@ const LoginScreen = ({ changeJwt }) => {
   }
 
   return (
-    <Container>
-      <h1>Login</h1>
-      <Form onSubmit={(event) => event.preventDefault()}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="username"
-            placeholder="Enter username"
-            onChange={(event) => setUsername(event.target.value)}
-            value={username}
-          />
-        </Form.Group>
+    <div className="login-container">
+      <div className="login">
+        <h1 className="text-center">Login</h1>
+        <Form onSubmit={(event) => event.preventDefault()}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Usuario</Form.Label>
+            <Form.Control
+              type="username"
+              placeholder="Ingresar usuario"
+              onChange={(event) => setUsername(event.target.value)}
+              value={username}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(event) => setPassword(event.target.value)}
-            value={password}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleLogin}>
-          Iniciar Sesion
-        </Button>
-        <Link to="/registro" className="btn btn-primary ms-2">Registro</Link>
-      </Form>
-    </Container>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Ingresar contraseña"
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+              required
+            />
+          </Form.Group>
+          <Button className="w-50" variant="primary" type="submit" onClick={handleLogin}>
+            Iniciar Sesion
+          </Button>
+          <Link to="/registro" className="btn btn-primary w-50" variant="outline-primary">Registro</Link>
+        </Form>
+      </div>
+      <div className="img">
+        <img src={Logo} alt="" style={{ width: "20vw" }} />
+      </div>
+    </div>
   )
 }
 

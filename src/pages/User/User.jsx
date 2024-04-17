@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap"
 const UserScreen = () => {
   return (
     <Container>
-      <h1>User</h1>
+      <h1>Bienvenido </h1>
     </Container>
 
   )
