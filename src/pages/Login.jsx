@@ -1,14 +1,21 @@
 import PropTypes from "prop-types";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Logo from "../assets/logo.png"
 import "../pages/Login.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faGoogle, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import "../pages/LoginRegister.css";
+import FotoLogin from "../assets/login.svg";
 
 const LoginScreen = ({ changeJwt }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [redirectToRegister, setRedirectToRegister] = useState(false); // Nuevo estado
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     const myHeaders = new Headers();
@@ -41,6 +48,7 @@ const LoginScreen = ({ changeJwt }) => {
           showConfirmButton: false,
           timer: 1500
         });
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
@@ -54,40 +62,86 @@ const LoginScreen = ({ changeJwt }) => {
     setPassword("");
   }
 
-  return (
-    <div className="login-container">
-      <div className="login">
-        <h1 className="text-center">Login</h1>
-        <Form onSubmit={(event) => event.preventDefault()}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Usuario</Form.Label>
-            <Form.Control
-              type="username"
-              placeholder="Ingresar usuario"
-              onChange={(event) => setUsername(event.target.value)}
-              value={username}
-              required
-            />
-          </Form.Group>
+  const handleSignUpClick = () => {
+    document.querySelector('.container-loginregister').classList.add('sign-up-mode');
+    setRedirectToRegister(true); // Establecer el estado para redirigir
+  };
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Ingresar contraseña"
-              onChange={(event) => setPassword(event.target.value)}
-              value={password}
-              required
-            />
-          </Form.Group>
-          <Button className="w-50" variant="primary" type="submit" onClick={handleLogin}>
-            Iniciar Sesion
-          </Button>
-          <Link to="/registro" className="btn btn-primary w-50" variant="outline-primary">Registro</Link>
-        </Form>
+  const handleSignInClick = () => {
+    document.querySelector('.container-loginregister').classList.remove('sign-up-mode');
+  };
+
+  useEffect(() => {
+    // Redirigir después de la animación
+    if (redirectToRegister) {
+      const redirectTimeout = setTimeout(() => {
+        navigate('/registro'); 
+      }, 1500); 
+  
+      return () => clearTimeout(redirectTimeout); 
+    }
+  }, [redirectToRegister, navigate]);
+
+  return (
+    <div className="container-loginregister">
+      <div className="forms-container">
+        <div className="signin-signup">
+          <Form className='sign-in-form' onSubmit={(event) => event.preventDefault()}>
+            <h2>Iniciar Sesion</h2>
+            <div className="input-field">
+              <FontAwesomeIcon className='i' icon={faUser} />
+              <input
+                type="text"
+                placeholder='Usuario'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="input-field">
+              <FontAwesomeIcon className='i' icon={faLock} />
+              <input
+                type="password"
+                placeholder='Contraseña'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <Button className='btn-solid' onClick={handleLogin}>Iniciar Sesión</Button>
+            <p className="social-text">O inicia sesión con tus redes sociales.</p>
+            <div className="social-media">
+              <a href='#' className="social-icon">
+                <FontAwesomeIcon className='i' icon={faFacebook} />
+              </a>
+              <a href='#' className="social-icon">
+                <FontAwesomeIcon className='i' icon={faTwitter} />
+              </a>
+              <a href='#' className="social-icon">
+                <FontAwesomeIcon className='i' icon={faGoogle} />
+              </a>
+              <a href='#' className="social-icon">
+                <FontAwesomeIcon className='i' icon={faLinkedin} />
+              </a>
+            </div>
+          </Form>
+        </div>
       </div>
-      <div className="img">
-        <img src={Logo} alt="" style={{ width: "20vw" }} />
+      <div className="panels-container">
+        <div className="panel left-panel">
+          <div className="content">
+            <h3>No tienes una cuenta?</h3>
+            <p>Registra tu cuenta y empieza a administrar tus productos.</p>
+            <button className='btn transparent' id='sign-up-btn' onClick={handleSignUpClick}>Regístrate</button>
+          </div>
+          <img src={FotoLogin} alt="" className='image' />
+        </div>
+
+        <div className="panel right-panel">
+          <div className="content">
+            <h3>Uno de nosotros?</h3>
+            <p>Inicia sesión y configura tu panel de administrador.</p>
+            <button className='btn transparent' id='sign-in-btn' onClick={handleSignInClick}>Iniciar Sesión</button>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Form, Button } from "react-bootstrap"
+import { Container, Table, Form, Button, Modal } from "react-bootstrap"
 import API_URL from "../common/constants"
 import MySwal, { show_alerta } from '../components/FunctionsSwal';
+import "../pages/Products.css"
 
 const ProductsScreen = ({ jwt }) => {
     // Estados
@@ -24,7 +25,16 @@ const ProductsScreen = ({ jwt }) => {
     const [editarVencimiento, setEditarVencimiento] = useState("")
     const [editarCategoria, setEditarCategoria] = useState("")
     const [editarId, setEditarId] = useState("")
-    const [showForm, setShowForm] = useState(false)
+    const [lgShow, setLgShow] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false);
+
+    const handleClose = () => {
+        setLgShow(false);
+        setShowEditModal(false); // Cerrar también el modal de edición al cerrar el modal principal
+    }
+    const handleShow = () => setLgShow(true);
+    const handleShowEditModal = () => setShowEditModal(true); // Cambiar el nombre de la función
+
 
     // Obtener todas las categorías disponibles
     useEffect(() => {
@@ -123,7 +133,7 @@ const ProductsScreen = ({ jwt }) => {
 
     }
 
-    
+
     //Formatear Fecha
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -173,7 +183,7 @@ const ProductsScreen = ({ jwt }) => {
         setCantidad("")
         setVencimiento("")
         setCategoria("")
-        setShowForm(false);
+        setLgShow(false);
     }
 
     const handleSubmitUpdate = async () => {
@@ -182,7 +192,7 @@ const ProductsScreen = ({ jwt }) => {
         setEditarId("");
         setEditarMarca("");
         setEditarProducto("");
-        setShowForm(false);
+        setLgShow(false);
     }
 
     // Manejador para eliminar un producto
@@ -215,153 +225,84 @@ const ProductsScreen = ({ jwt }) => {
             <h1>Pagina de Productos</h1>
 
             {/* FORMULARIO PARA CREAR PRODUCTO */}
-            <Button onClick={() => setShowForm(state => !state)}>Crear Producto</Button>
-            <Form className='mb-5 categories__create-form' style={{ height: showForm ? "auto" : undefined }}>
-                <Form.Group className="mb-3" controlId="formBasicMarca">
-                    <Form.Label>Marca</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese una Marca"
-                        value={marca}
-                        onChange={handleChangeMarca}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicProducto">
-                    <Form.Label>Producto</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese un Producto"
-                        value={producto}
-                        onChange={handleChangeProduct}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPrecio">
-                    <Form.Label>Precio</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese un Precio"
-                        value={precio}
-                        onChange={handleChangePrecio}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicDescripcion">
-                    <Form.Label>Descripcion</Form.Label>
-                    <Form.Control
-                        type="text"
-                        as="textarea"
-                        placeholder="Ingrese una descripcion"
-                        value={descripcion}
-                        onChange={handleChangeDescripcion}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPeso">
-                    <Form.Label>Peso</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese un Peso"
-                        value={peso}
-                        onChange={handleChangePeso}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCantidad">
-                    <Form.Label>Cantidad</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese una Cantidad"
-                        value={cantidad}
-                        onChange={handleChangeCantidad}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicVencimiento">
-                    <Form.Label>Vencimiento</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese la fecha de vencimiento AA-MM-DD"
-                        value={vencimiento}
-                        onChange={(e) => setVencimiento(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCategoria">
-                    <Form.Label>Categoría</Form.Label>
-                    <Form.Select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-                        <option>Selecciona una Categoría</option>
-                        {marcas.map((marca) => (
-                            <option key={marca._id} value={marca._id}>{marca.nombre}</option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
-                <Button variant="success" onClick={handleSubmit}>Crear Producto</Button>
-            </Form>
-
-            {/* FORMULARIO PARA ACTUALIZAR PRODUCTO */}
-            {
-                editarId.length > 0 && (
-                    <Form className='mb-5'>
-                        <Form.Group className="mb-3" controlId="formBasicMarca">
+            <Button
+                variant='primary'
+                onClick={handleShow}
+            >Agregar Productos
+            </Button>
+            <Modal onHide={handleClose}
+                size="lg"
+                show={lgShow}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Agregar Productos</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form className='categories__create-form'>
+                        <Form.Group controlId="formBasicMarca">
                             <Form.Label>Marca</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese una Marca"
-                                value={editarMarca}
-                                onChange={(event) => setEditarMarca(event.target.value)}
+                                value={marca}
+                                onChange={handleChangeMarca}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicProducto">
+                        <Form.Group controlId="formBasicProducto">
                             <Form.Label>Producto</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese un Producto"
-                                value={editarProducto}
-                                onChange={(event) => setEditarProducto(event.target.value)}
+                                value={producto}
+                                onChange={handleChangeProduct}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPrecio">
+                        <Form.Group controlId="formBasicPrecio">
                             <Form.Label>Precio</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese un Precio"
-                                value={editarPrecio}
-                                onChange={(event) => setEditarPrecio(event.target.value)}
+                                value={precio}
+                                onChange={handleChangePrecio}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicDescripcion">
+                        <Form.Group controlId="formBasicDescripcion">
                             <Form.Label>Descripcion</Form.Label>
                             <Form.Control
                                 type="text"
                                 as="textarea"
                                 placeholder="Ingrese una descripcion"
-                                value={editarDescripcion}
-                                onChange={(event) => setEditarDescripcion(event.target.value)}
+                                value={descripcion}
+                                onChange={handleChangeDescripcion}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPeso">
+                        <Form.Group controlId="formBasicPeso">
                             <Form.Label>Peso</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese un Peso"
-                                value={editarPeso}
-                                onChange={(event) => setEditarPeso(event.target.value)}
+                                value={peso}
+                                onChange={handleChangePeso}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicCantidad">
+                        <Form.Group controlId="formBasicCantidad">
                             <Form.Label>Cantidad</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese una Cantidad"
-                                value={editarCantidad}
-                                onChange={(event) => setEditarCantidad(event.target.value)}
+                                value={cantidad}
+                                onChange={handleChangeCantidad}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicVencimiento">
+                        <Form.Group controlId="formBasicVencimiento">
                             <Form.Label>Vencimiento</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese la fecha de vencimiento AA-MM-DD"
-                                value={editarVencimiento}
-                                onChange={(event) => setEditarVencimiento(event.target.value)}
+                                value={vencimiento}
+                                onChange={(e) => setVencimiento(e.target.value)}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicCategoria">
+                        <Form.Group controlId="formBasicCategoria">
                             <Form.Label>Categoría</Form.Label>
                             <Form.Select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
                                 <option>Selecciona una Categoría</option>
@@ -370,19 +311,108 @@ const ProductsScreen = ({ jwt }) => {
                                 ))}
                             </Form.Select>
                         </Form.Group>
-                        <Button variant="success" onClick={handleSubmitUpdate}>Actualizar Producto</Button>
-                        <Button variant="danger" onClick={() => {
-                            setEditarId("")
-                            setEditarMarca("")
-                            setEditarProducto("")
-                            setEditarPrecio("")
-                            setEditarDescripcion("")
-                            setEditarPeso("")
-                            setEditarCantidad("")
-                            setEditarVencimiento("")
-                            setEditarCategoria("")
-                        }}>Cancelar</Button>
                     </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="success" onClick={handleSubmit}>Crear Producto</Button>
+                </Modal.Footer>
+            </Modal>
+
+
+            {/* FORMULARIO PARA ACTUALIZAR PRODUCTO */}
+            {
+                editarId.length > 0 && (
+                    <Modal show={showEditModal} size='lg' onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Editar Producto</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form className='categories__create-form'>
+                                <Form.Group className="mb-1" controlId="formBasicMarca">
+                                    <Form.Label>Marca</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese una Marca"
+                                        value={editarMarca}
+                                        onChange={(event) => setEditarMarca(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicProducto">
+                                    <Form.Label>Producto</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese un Producto"
+                                        value={editarProducto}
+                                        onChange={(event) => setEditarProducto(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicPrecio">
+                                    <Form.Label>Precio</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese un Precio"
+                                        value={editarPrecio}
+                                        onChange={(event) => setEditarPrecio(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicDescripcion">
+                                    <Form.Label>Descripcion</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        as="textarea"
+                                        placeholder="Ingrese una descripcion"
+                                        value={editarDescripcion}
+                                        onChange={(event) => setEditarDescripcion(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicPeso">
+                                    <Form.Label>Peso</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese un Peso"
+                                        value={editarPeso}
+                                        onChange={(event) => setEditarPeso(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicCantidad">
+                                    <Form.Label>Cantidad</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese una Cantidad"
+                                        value={editarCantidad}
+                                        onChange={(event) => setEditarCantidad(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicVencimiento">
+                                    <Form.Label>Vencimiento</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese la fecha de vencimiento AA-MM-DD"
+                                        value={editarVencimiento}
+                                        onChange={(event) => setEditarVencimiento(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-1" controlId="formBasicCategoria">
+                                    <Form.Label>Categoría</Form.Label>
+                                    <Form.Select value={editarCategoria} onChange={(e) => setEditarCategoria(e.target.value)}>
+                                        <option>Selecciona una Categoría</option>
+                                        {marcas.map((marca) => (
+                                            <option key={marca._id} value={marca._id}>{marca.nombre}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Cancelar
+                            </Button>
+                            <Button variant="success" onClick={handleSubmitUpdate}>Actualizar Producto</Button>
+                        </Modal.Footer>
+                    </Modal>
                 )
             }
 
@@ -410,8 +440,8 @@ const ProductsScreen = ({ jwt }) => {
                             <td>{producto.descripcion}</td>
                             <td>{producto.peso}</td>
                             <td>{producto.cantidad}</td>
-                            <td>{formatDate(producto.vencimiento)}</td> 
-                            <td>{producto.categoria}</td>
+                            <td>{formatDate(producto.vencimiento)}</td>
+                            <td>{producto.categoria.nombre}</td>
                             <td>
                                 <Button variant='danger' onClick={() => handleDeleteProduct(producto._id)}>Eliminar</Button>
                                 <Button variant='warning' onClick={() => {
@@ -424,6 +454,7 @@ const ProductsScreen = ({ jwt }) => {
                                     setEditarCantidad(producto.cantidad);
                                     setEditarVencimiento(producto.vencimiento);
                                     setEditarCategoria(producto.categoria);
+                                    setShowEditModal(true);
                                 }}>Editar</Button>
                             </td>
                         </tr>

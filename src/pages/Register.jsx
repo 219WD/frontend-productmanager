@@ -1,17 +1,23 @@
 import PropTypes from "prop-types";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Logo from "../assets/logo.png"
 import "../pages/Register.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faGoogle, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import "../pages/LoginRegister.css";
+import FotoRegister from "../assets/register.svg";
 
 const RegisterScreen = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [apellido, setApellido] = useState("");
     const [error, setError] = useState(null);
+    const [redirectToLogin, setRedirectToLogin] = useState(false); // Nuevo estado
+    
 
     const handleRegister = (event) => {
         event.preventDefault();
@@ -61,73 +67,100 @@ const RegisterScreen = () => {
         setUsername("");
         setPassword("");
         setEmail("");
-        setNombre("");
-        setApellido("");
     }
 
+    const handleSignUpClick = () => {
+        document.querySelector('.container-loginregister').classList.add('sign-up-mode');
+    };
+
+    const handleSignInClick = () => {
+        document.querySelector('.container-loginregister').classList.remove('sign-up-mode');
+        setRedirectToLogin(true); 
+    };
+    
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      // Redirigir después de la animación
+      if (redirectToLogin) {
+        const redirectTimeout = setTimeout(() => {
+          navigate('/login'); 
+        }, 1800); 
+    
+        return () => clearTimeout(redirectTimeout); 
+      }
+    }, [redirectToLogin, navigate]);
+
     return (
-        <div className="registro-container mb-5">
-            <div className="registro">
-                <h1>Registro</h1>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleRegister}>
-                    <Form.Group className="mb-3" controlId="formBasicUser">
-                        <Form.Label>Usuario</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Ingresar usuario"
-                            onChange={(event) => setUsername(event.target.value)}
-                            value={username}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Ingresar contraseña"
-                            onChange={(event) => setPassword(event.target.value)}
-                            value={password}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            placeholder="Ingresar email"
-                            onChange={(event) => setEmail(event.target.value)}
-                            value={email}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicNombre">
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Ingresar nombre"
-                            onChange={(event) => setNombre(event.target.value)}
-                            value={nombre}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicApellido">
-                        <Form.Label>Apellido</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Ingresar apellido"
-                            onChange={(event) => setApellido(event.target.value)}
-                            value={apellido}
-                        />
-                    </Form.Group>
-
-                    <Button className="w-100" variant="primary" type="submit">
-                        Registro
-                    </Button>
-                </Form>
+        <div className="container-loginregister">
+            <div className="forms-container">
+                <div className="signin-signup">
+                    <Form className='sign-up-form' onSubmit={(event) => event.preventDefault()}>
+                        <h2>Registro</h2>
+                        <div className="input-field">
+                            <FontAwesomeIcon className='i' icon={faUser} />
+                            <input
+                                type="text"
+                                placeholder='Usuario'
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <FontAwesomeIcon className='i' icon={faEnvelope} />
+                            <input
+                                type="email"
+                                placeholder='Email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <FontAwesomeIcon className='i' icon={faLock} />
+                            <input
+                                type="password"
+                                placeholder='Contraseña'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <Button className='btn-solid' onClick={handleRegister}>Registrarse</Button>
+                        <p className="social-text">O inicia sesión con tus redes sociales.</p>
+                        <div className="social-media">
+                            <a href='#' className="social-icon">
+                                <FontAwesomeIcon className='i' icon={faFacebook} />
+                            </a>
+                            <a href='#' className="social-icon">
+                                <FontAwesomeIcon className='i' icon={faTwitter} />
+                            </a>
+                            <a href='#' className="social-icon">
+                                <FontAwesomeIcon className='i' icon={faGoogle} />
+                            </a>
+                            <a href='#' className="social-icon">
+                                <FontAwesomeIcon className='i' icon={faLinkedin} />
+                            </a>
+                        </div>
+                    </Form>
+                </div>
             </div>
-            <div className="img-register">
-                <img src={Logo} alt="" style={{ width: "20vw" }} />
+            <div className="panels-container">
+                <div className="panel left-panel">
+                    <div className="content">
+                        <h3>No tienes una cuenta?</h3>
+                        <p>Registrate y empieza a administrar tus productos.</p>
+                        <button className='btn transparent' id='sign-up-btn' onClick={handleSignUpClick}>Regístrate</button>
+                    </div>
+                    <img src={FotoRegister} alt="" className='image' />
+                </div>
+
+                <div className="panel right-panel">
+                    <div className="content">
+                        <h3>Uno de nosotros?</h3>
+                        <p>Inicia sesión y configura tu panel de administrador.</p>
+                        <button className='btn transparent' id='sign-in-btn' onClick={handleSignInClick}>Iniciar Sesión</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

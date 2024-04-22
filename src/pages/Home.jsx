@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Container } from "react-bootstrap"
-import LogoLargo from "../assets/logo-largo.png"
 import Foto1 from "../assets/National Safety Month June 2019.jpg"
 import Foto2 from "../assets/Premium Photo _ Focused warehouse manager writing on clipboard.jpg"
 import Foto3 from "../assets/Mobile Mechanic or a Repair Shop which is the best choice.jpg"
@@ -13,7 +12,6 @@ import 'aos/dist/aos.css';
 
 
 const HomeScreen = () => {
-  const whatsappLink = "https://api.whatsapp.com/send/?phone=5493816671884&text=Hola,%20quiero%20contratar%20Stock%20Manager.&type=phone_number&app_absent=0";
   useEffect(() => {
     Aos.init()
   })
@@ -114,7 +112,7 @@ const HomeScreen = () => {
         <h2>Contrata nuestro servicio</h2>
         <div className="service-content">
           <div className="cards-service" data-aos="fade-right">
-            <div className="card card-service" style={{height: "80%"}}>
+            <div className="card card-service" style={{ height: "80%" }}>
               <h3>Compra nuestro servicio</h3>
               <p>Adquiri nuestro servicio de forma definitiva con un gran descuento pagando de contado.</p>
               <ul>
@@ -122,9 +120,9 @@ const HomeScreen = () => {
                 <li>Dominio y pagina .com.ar gratis.</li>
                 <li>Mantenimiento contante.</li>
               </ul>
-              <button className='contratar'>Contratar servicio</button>
+              <button className='btn-solid contratar'>Contratar servicio</button>
             </div>
-            <div className="card card-service" style={{height: "80%"}}>
+            <div className="card card-service" style={{ height: "80%" }}>
               <h3>Financia nuestro servicio</h3>
               <p>Adquiri nuestro servicio de forma definitiva en comodas cuotas mensuales.</p>
               <ul>
@@ -132,21 +130,12 @@ const HomeScreen = () => {
                 <li>Dominio y pagina .com.ar con un increible descuento.</li>
                 <li>Mantenimiento contante.</li>
               </ul>
-              <button className='contratar'>Contratar servicio</button>
+              <button className='btn-solid contratar'>Contratar servicio</button>
             </div>
           </div>
-          <img src={Foto3} alt="" style={{width:"40%",  borderRadius: "5px"}} data-aos="fade-left"/>
+          <img src={Foto3} alt="" style={{ width: "40%", borderRadius: "5px" }} data-aos="fade-left" />
         </div>
 
-
-      </div>
-
-      <div className="footer" data-aos="fade-up">
-      <h7>Tambien podes:</h7>
-        <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-          <button className='whatsapp'>Contactar por WhatsApp</button>
-        </a>
-        <img src={LogoLargo} alt="" style={{ width: "30rem" }} />
 
       </div>
     </>

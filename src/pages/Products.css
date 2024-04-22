@@ -1,0 +1,13 @@
+
+.categories__create-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .7rem;
+    padding: 10px;
+    border-radius: 20px;
+    height: 100%;
+  }
+  
+  .categories__create-form {
+    grid-column: span 1;
+  }
