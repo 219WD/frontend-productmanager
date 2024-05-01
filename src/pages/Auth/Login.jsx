@@ -15,12 +15,30 @@ import API_URL from "../../common/constants"
 const LoginScreen = ({ changeJwt }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [redirectToRegister, setRedirectToRegister] = useState(false); 
+  const [redirectToRegister, setRedirectToRegister] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [animateOut, setAnimateOut] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    if (username.trim() === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, ingresa tu nombre de usuario.'
+      });
+      return;
+    }
+
+    if (password === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, ingresa tu contraseña.'
+      });
+      return;
+    }
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -66,7 +84,7 @@ const LoginScreen = ({ changeJwt }) => {
   }
 
   const handleSignUpClick = () => {
-    setAnimateOut(true); 
+    setAnimateOut(true);
 
     setTimeout(() => {
       navigate('/registro');
@@ -83,7 +101,7 @@ const LoginScreen = ({ changeJwt }) => {
     if (animateOut) {
       setTimeout(() => {
         setAnimateOut(true);
-      }); 
+      });
     }
   }, [animateOut]);
 

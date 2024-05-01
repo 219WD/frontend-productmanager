@@ -15,14 +15,43 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
-    const [redirectToLogin, setRedirectToLogin] = useState(false); 
+    const [redirectToLogin, setRedirectToLogin] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
     const navigate = useNavigate();
 
-    
+
 
     const handleRegister = (event) => {
         event.preventDefault();
+
+        if (username.length < 8 || username.length > 20) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El nombre de usuario debe tener entre 8 y 20 caracteres.'
+            });
+            return;
+        }
+
+        const alphanumericRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if (!alphanumericRegex.test(password)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Contraseña no válida',
+                text: 'La contraseña debe ser alfanumérica.'
+            });
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El correo electrónico no tiene un formato válido.'
+            });
+            return;
+        }
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -69,19 +98,19 @@ const RegisterScreen = () => {
     }
 
     const handleSignInClick = () => {
-        setAnimateOut(true); 
+        setAnimateOut(true);
         setTimeout(() => {
-          navigate('/login');
+            navigate('/login');
         });
-      };
+    };
 
     useEffect(() => {
         if (animateOut) {
-          setTimeout(() => {
-            setAnimateOut(false); 
-          }); 
+            setTimeout(() => {
+                setAnimateOut(false);
+            });
         }
-      }, [animateOut]);
+    }, [animateOut]);
     return (
         <div className="container-loginregister">
             <div className="forms-container">
@@ -93,6 +122,7 @@ const RegisterScreen = () => {
                             <input
                                 type="text"
                                 placeholder='Usuario'
+                                required
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -102,6 +132,7 @@ const RegisterScreen = () => {
                             <input
                                 type="email"
                                 placeholder='Email'
+                                required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -111,6 +142,7 @@ const RegisterScreen = () => {
                             <input
                                 type="password"
                                 placeholder='Contraseña'
+                                required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
