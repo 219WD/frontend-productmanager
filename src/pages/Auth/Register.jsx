@@ -33,12 +33,12 @@ const RegisterScreen = () => {
             return;
         }
 
-        const alphanumericRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        const alphanumericRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$/;
         if (!alphanumericRegex.test(password)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Contraseña no válida',
-                text: 'La contraseña debe ser alfanumérica.'
+                text: 'La contraseña debe ser alfanumérica y contener al menos 8 caracteres.'
             });
             return;
         }
