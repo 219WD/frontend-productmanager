@@ -44,7 +44,7 @@ const AdminManagement = () => {
         return; 
       }
 
-      const response = await fetch(`http://localhost:8000/admin/${isAdmin ? 'demotion' : 'promotion'}/${userId}`, {
+      const response = await fetch(API_URL + `/admin/${isAdmin ? 'demotion' : 'promotion'}/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const AdminManagement = () => {
         return; 
       }
 
-      const response = await fetch('http://localhost:8000/admin/delete', {
+      const response = await fetch(API_URL + '/admin/delete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
