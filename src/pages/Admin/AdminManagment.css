@@ -1,0 +1,22 @@
+.contenedor-admin-managment{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contenedor-admin-managment::before {
+    content: '';
+    position: absolute;
+    width: 2000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: linear-gradient(-45deg, #4481eb, #04befe);
+    top: 10%;
+    right: 48%;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+.buttons-actions.adminmanagment{
+    display: flex;
+}

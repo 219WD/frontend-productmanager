@@ -16,7 +16,7 @@ const Footer = () => {
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <button className='btn-solid whatsapp'><FontAwesomeIcon className='icono' icon={faWhatsapp} /> Contactar por WhatsApp</button>
             </a>
-            <img src={LogoLargo} alt="" style={{ width: "30rem" }} />
+            <img src={LogoLargo} className='logo-footer' alt="" />
 
         </footer>
     )

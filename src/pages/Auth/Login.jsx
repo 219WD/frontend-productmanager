@@ -3,18 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import Logo from "../assets/logo.png"
-import "../pages/Login.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import "../pages/LoginRegister.css";
-import FotoLogin from "../assets/login.svg";
+import ".././Auth/LoginRegister.css";
+import FotoRegister from "../../assets/register.svg";
+import ForgotPasswordModal from '../ForgotPasswordModal';
+import API_URL from "../../common/constants"
+
 
 const LoginScreen = ({ changeJwt }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [redirectToRegister, setRedirectToRegister] = useState(false); // Nuevo estado
+  const [redirectToRegister, setRedirectToRegister] = useState(false); 
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+  const [animateOut, setAnimateOut] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -33,7 +36,7 @@ const LoginScreen = ({ changeJwt }) => {
       redirect: "follow"
     };
 
-    fetch("http://localhost:8000/auth/login", requestOptions)
+    fetch(API_URL + "/auth/login", requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Credenciales inválidas");
@@ -63,24 +66,26 @@ const LoginScreen = ({ changeJwt }) => {
   }
 
   const handleSignUpClick = () => {
-    document.querySelector('.container-loginregister').classList.add('sign-up-mode');
-    setRedirectToRegister(true); // Establecer el estado para redirigir
+    setAnimateOut(true); 
+
+    setTimeout(() => {
+      navigate('/registro');
+    });
   };
 
-  const handleSignInClick = () => {
-    document.querySelector('.container-loginregister').classList.remove('sign-up-mode');
+  const handleForgotPassword = () => {
+
+    setShowForgotPasswordModal(true);
   };
 
   useEffect(() => {
-    // Redirigir después de la animación
-    if (redirectToRegister) {
-      const redirectTimeout = setTimeout(() => {
-        navigate('/registro'); 
-      }, 1500); 
-  
-      return () => clearTimeout(redirectTimeout); 
+
+    if (animateOut) {
+      setTimeout(() => {
+        setAnimateOut(true);
+      }); 
     }
-  }, [redirectToRegister, navigate]);
+  }, [animateOut]);
 
   return (
     <div className="container-loginregister">
@@ -106,6 +111,7 @@ const LoginScreen = ({ changeJwt }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <Button variant="link" onClick={handleForgotPassword}>Olvidaste la contraseña?</Button>
             <Button className='btn-solid' onClick={handleLogin}>Iniciar Sesión</Button>
             <p className="social-text">O inicia sesión con tus redes sociales.</p>
             <div className="social-media">
@@ -132,20 +138,17 @@ const LoginScreen = ({ changeJwt }) => {
             <p>Registra tu cuenta y empieza a administrar tus productos.</p>
             <button className='btn transparent' id='sign-up-btn' onClick={handleSignUpClick}>Regístrate</button>
           </div>
-          <img src={FotoLogin} alt="" className='image' />
-        </div>
-
-        <div className="panel right-panel">
-          <div className="content">
-            <h3>Uno de nosotros?</h3>
-            <p>Inicia sesión y configura tu panel de administrador.</p>
-            <button className='btn transparent' id='sign-in-btn' onClick={handleSignInClick}>Iniciar Sesión</button>
-          </div>
+          <img src={FotoRegister} alt="" className='image' />
         </div>
       </div>
+      <ForgotPasswordModal
+        show={showForgotPasswordModal}
+        onHide={() => setShowForgotPasswordModal(false)}
+      />
     </div>
   )
 }
+
 
 LoginScreen.propTypes = {
   changeJwt: PropTypes.func.isRequired

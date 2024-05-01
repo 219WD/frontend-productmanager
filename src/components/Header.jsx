@@ -41,9 +41,6 @@ function Header({ authenticated = false, isAdmin = false, changeJwt }) {
                     </Nav.Link>
                   </Link>
                 </>
-
-
-
               )}
               {authenticated === true && (
                 <Link to="/user" className="text-decoration-none">

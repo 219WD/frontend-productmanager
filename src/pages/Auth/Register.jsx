@@ -1,22 +1,24 @@
-import PropTypes from "prop-types";
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import Logo from "../assets/logo.png"
-import "../pages/Register.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import "../pages/LoginRegister.css";
-import FotoRegister from "../assets/register.svg";
+import ".././Auth/LoginRegister.css";
+import FotoLogin from "../../assets/login.svg";
+import API_URL from "../../common/constants"
+
 
 const RegisterScreen = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
-    const [redirectToLogin, setRedirectToLogin] = useState(false); // Nuevo estado
+    const [redirectToLogin, setRedirectToLogin] = useState(false); 
+    const [animateOut, setAnimateOut] = useState(false);
+    const navigate = useNavigate();
+
     
 
     const handleRegister = (event) => {
@@ -28,9 +30,7 @@ const RegisterScreen = () => {
         const raw = JSON.stringify({
             username: username,
             password: password,
-            email: email,
-            nombre: nombre,
-            apellido: apellido
+            email: email
         });
 
         const requestOptions = {
@@ -40,7 +40,7 @@ const RegisterScreen = () => {
             redirect: "follow"
         };
 
-        fetch("http://localhost:8000/auth/registro", requestOptions)
+        fetch(API_URL + "/auth/registro", requestOptions)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Hubo un problema al registrar el usuario");
@@ -54,7 +54,6 @@ const RegisterScreen = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                console.log("Usuario registrado exitosamente");
             })
             .catch((error) => {
                 Swal.fire({
@@ -69,34 +68,25 @@ const RegisterScreen = () => {
         setEmail("");
     }
 
-    const handleSignUpClick = () => {
-        document.querySelector('.container-loginregister').classList.add('sign-up-mode');
-    };
-
     const handleSignInClick = () => {
-        document.querySelector('.container-loginregister').classList.remove('sign-up-mode');
-        setRedirectToLogin(true); 
-    };
-    
-
-    const navigate = useNavigate();
+        setAnimateOut(true); 
+        setTimeout(() => {
+          navigate('/login');
+        });
+      };
 
     useEffect(() => {
-      // Redirigir después de la animación
-      if (redirectToLogin) {
-        const redirectTimeout = setTimeout(() => {
-          navigate('/login'); 
-        }, 1800); 
-    
-        return () => clearTimeout(redirectTimeout); 
-      }
-    }, [redirectToLogin, navigate]);
-
+        if (animateOut) {
+          setTimeout(() => {
+            setAnimateOut(false); 
+          }); 
+        }
+      }, [animateOut]);
     return (
         <div className="container-loginregister">
             <div className="forms-container">
                 <div className="signin-signup">
-                    <Form className='sign-up-form' onSubmit={(event) => event.preventDefault()}>
+                    <Form className='sign-in-form' onSubmit={(event) => event.preventDefault()}>
                         <h2>Registro</h2>
                         <div className="input-field">
                             <FontAwesomeIcon className='i' icon={faUser} />
@@ -147,19 +137,11 @@ const RegisterScreen = () => {
             <div className="panels-container">
                 <div className="panel left-panel">
                     <div className="content">
-                        <h3>No tienes una cuenta?</h3>
-                        <p>Registrate y empieza a administrar tus productos.</p>
-                        <button className='btn transparent' id='sign-up-btn' onClick={handleSignUpClick}>Regístrate</button>
-                    </div>
-                    <img src={FotoRegister} alt="" className='image' />
-                </div>
-
-                <div className="panel right-panel">
-                    <div className="content">
                         <h3>Uno de nosotros?</h3>
                         <p>Inicia sesión y configura tu panel de administrador.</p>
                         <button className='btn transparent' id='sign-in-btn' onClick={handleSignInClick}>Iniciar Sesión</button>
                     </div>
+                    <img src={FotoLogin} alt="" className='image' />
                 </div>
             </div>
         </div>

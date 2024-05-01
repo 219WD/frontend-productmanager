@@ -11,28 +11,24 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 
 
+
 const HomeScreen = () => {
   useEffect(() => {
     Aos.init()
   })
   return (
-    <>
-      <div className="hero" data-aos="zoom-in">
+    <div className='container-home'>
+      <div className="hero">
         <div className="title-hero">
-          <h5>SOLUCION DE GESTIÓN DE STOCK PARA PYMES</h5>
+          <h4 className='subtitulo'>SOLUCION DE GESTIÓN DE STOCK PARA PYMES</h4>
           <h1>Stock Manager</h1>
-          <p>Simplificamos la gestion del manejo de vencimiento de tu stock.</p>
+          <p className='subtitulo'>Simplificamos la gestion del manejo de vencimiento de tu stock.</p>
         </div>
       </div>
 
       <div className="section-0">
         <h2 className='title' data-aos="fade-right">Bienvenido a Stock Manager</h2>
-        <div className="about" style={
-          {
-            display: "flex",
-            gap: "20px"
-          }
-        }>
+        <div className="about">
           <p data-aos="fade-right">
             En Stock Manager, estamos comprometidos a simplificar la gestión de productos para tu negocio.
             Nuestra aplicación te ofrece una solución intuitiva y eficiente para administrar tus productos
@@ -49,52 +45,41 @@ const HomeScreen = () => {
             No pierdas más tiempo con procesos complicados y tediosos.
             ¡Únete a la comunidad de usuarios satisfechos de Stock Manager y lleva la gestión de productos al siguiente nivel!
           </p>
-          <img src={Foto1} alt="" data-aos="fade-left" style={
-            {
-              width: "50%",
-              borderRadius: "5px"
-            }
-          } />
+          <img className='foto1' src={Foto1} alt="" data-aos="fade-left" />
         </div>
       </div>
 
 
 
-      <div className="cards-container mt-5 mb-5">
+      <div className="cards-container">
         <div className="cards" data-aos="fade-up">
           <div className="card">
-            <img src={Icon1} alt="" style={{
-              width: "200px"
-            }} />
-            <h6>Basta de perder dinero y mercaderia</h6>
+            <img src={Icon1} className='foto-icon' alt="" />
+            <h6>Deja de perder dinero y mercaderia</h6>
           </div>
           <div className="card">
-            <img src={Icon2} alt="" style={{
-              width: "200px"
-            }} />
+            <img src={Icon2} className='foto-icon' alt="" />
             <h6>Lleva un control total de tu Stock</h6>
           </div>
           <div className="card">
-            <img src={Icon3} alt="" style={{
-              width: "200px"
-            }} />
+            <img src={Icon3} className='foto-icon' alt="" />
             <h6>Constantes alertas de vencimiento</h6>
           </div>
         </div>
       </div>
 
-      <div className="info-cards mt-5 mb-5">
+      <div className="info-cards">
         <ul data-aos="fade-up">
-          <li style={{ borderRight: '1px solid #000', paddingRight: '20px', marginRight: '10px' }}><p>Deja de perder dinero por controles anticuados e imprecisos de tu mercaderia que se vence y tenes que tirarla.</p></li>
-          <li style={{ borderRight: '1px solid #000', paddingRight: '20px', marginRight: '10px' }}><p>Lleva un control absoluto y detallado de cada producto de tu stock, registralo en cuestion de minutos y deja de perder mercaderia. </p></li>
-          <li><p>Programa cada cuanto tiempo previo al vencimiento queres tus alertas y pedi el cambio o hace un descuento a tiempo.</p></li>
+          <li><p>Deja de perder dinero por controles anticuados e imprecisos de tu mercaderia que se vence y tenes que tirarla.</p></li>
+          <li><p>Lleva un control absoluto y detallado de cada producto de tu stock, registralo en cuestion de minutos y deja de perder mercaderia. </p></li>
+          <li className='border-none'><p>Programa cada cuanto tiempo previo al vencimiento queres tus alertas y pedi el cambio o hace un descuento a tiempo.</p></li>
         </ul>
       </div>
 
       <div className="section-1">
         <img src={Foto2} data-aos="fade-right" alt="" style={{ borderRadius: "5px" }} />
         <div className="text-s1" data-aos="fade-left">
-          <h3>El software de control de stock para impulsar tu empresa al futuro.</h3>
+          <h2 className='title'>El software de control de stock para impulsar tu empresa al futuro.</h2>
           <p>
             ¿Sentis que perdes el tiempo anotando tu stock? ¿Cansado de perder dinero por qué se vencen tus productos? <br /> <br />
             ¡Basta de perder  tiempo y dinero te presentamos Stock Manager!  <br /> <br />
@@ -112,33 +97,31 @@ const HomeScreen = () => {
         <h2>Contrata nuestro servicio</h2>
         <div className="service-content">
           <div className="cards-service" data-aos="fade-right">
-            <div className="card card-service" style={{ height: "80%" }}>
+            <div className="card card-service">
               <h3>Compra nuestro servicio</h3>
               <p>Adquiri nuestro servicio de forma definitiva con un gran descuento pagando de contado.</p>
               <ul>
                 <li>Atencion al cliente 24hs.</li>
                 <li>Dominio y pagina .com.ar gratis.</li>
-                <li>Mantenimiento contante.</li>
+                <li>Mantenimiento constante.</li>
               </ul>
               <button className='btn-solid contratar'>Contratar servicio</button>
             </div>
-            <div className="card card-service" style={{ height: "80%" }}>
+            <div className="card card-service">
               <h3>Financia nuestro servicio</h3>
               <p>Adquiri nuestro servicio de forma definitiva en comodas cuotas mensuales.</p>
               <ul>
                 <li>Atencion al cliente 24hs.</li>
                 <li>Dominio y pagina .com.ar con un increible descuento.</li>
-                <li>Mantenimiento contante.</li>
+                <li>Mantenimiento constante.</li>
               </ul>
               <button className='btn-solid contratar'>Contratar servicio</button>
             </div>
           </div>
-          <img src={Foto3} alt="" style={{ width: "40%", borderRadius: "5px" }} data-aos="fade-left" />
+          <img src={Foto3} className='foto3' alt="" data-aos="fade-left" />
         </div>
-
-
       </div>
-    </>
+    </div>
   )
 }
 

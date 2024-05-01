@@ -31,7 +31,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
 }
 
 .action{
@@ -52,4 +52,16 @@
 
 .imgAdmin img{
     width: 100%;
+}
+
+@media (max-width: 870px) {
+    .container-admin{
+        flex-direction: column;
+    }
+    .content-admin{
+        width: 100%;
+    }
+    .imgAdmin img{
+        width: 80vw;
+    }
 }

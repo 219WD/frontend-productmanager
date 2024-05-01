@@ -1,0 +1,36 @@
+.fotoUser {
+    width: 35rem;
+    padding-left: 5rem;
+}
+
+.p-user {
+    width: 60%;
+    text-align: center;
+}
+
+.signin-signup.user {
+    margin-left: 10%;
+}
+
+@media (max-width: 870px) {
+    .p-user {
+        width: 90%;
+        text-align: center;
+    }
+
+    .forms-container.user {
+        height: 60%;
+    }
+
+    .fotoUser {
+        width: 20rem;
+        margin-top: 5%;
+        padding-left: 0; 
+    }
+
+    .signin-signup.user {
+        justify-content: center;
+        align-items: center;
+        margin-left: 1rem;
+    }
+}

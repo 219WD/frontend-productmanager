@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Form, Button } from "react-bootstrap"
+import { Container, Table, Form, Button, Modal } from "react-bootstrap"
 import API_URL from "../common/constants"
 import "./Categories.css"
 import MySwal, { show_alerta } from '../components/FunctionsSwal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle, faTags } from '@fortawesome/free-solid-svg-icons';
 
 const CategoriesScreen = ({ jwt }) => {
-    //States
     const [categorias, setCategorias] = useState([])
     const [nombre, setNombre] = useState("")
     const [descripcion, setDescripcion] = useState("")
     const [editarNombre, setEditarNombre] = useState("")
     const [editarDescripcion, setEditarDescripcion] = useState("")
     const [editarId, setEditarId] = useState("")
-    const [showForm, setShowForm] = useState(false)
+    const [lgShow, setLgShow] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false);
 
+    const handleClose = () => {
+        setLgShow(false);
+        setShowEditModal(false); 
+    }
+    const handleShow = () => setLgShow(true);
+    const handleShowEditModal = () => setShowEditModal(true); 
 
-    //Functions
     const getAllCategories = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + jwt)
@@ -53,7 +60,6 @@ const CategoriesScreen = ({ jwt }) => {
         const response = await fetch(API_URL + "/categorias/create", requestOptions)
         const result = await response.json()
         console.log(result)
-
     }
 
     const deleteCategory = async (_id) => {
@@ -88,7 +94,6 @@ const CategoriesScreen = ({ jwt }) => {
 
     }
 
-    //Handlers
     const handleChangeName = (event) => {
         setNombre(event.target.value)
     }
@@ -103,7 +108,7 @@ const CategoriesScreen = ({ jwt }) => {
 
         setNombre("");
         setDescripcion("");
-        setShowForm(false);
+        setLgShow(false);
     }
 
     const handleSubmitUpdate = async () => {
@@ -112,13 +117,8 @@ const CategoriesScreen = ({ jwt }) => {
         setEditarId("");
         setEditarNombre("");
         setEditarDescripcion("");
-        setShowForm(false);
+        setLgShow(false);
     }
-
-    // const handleDeleteCategory = async (_id) => {
-    //     await deleteCategory(_id)
-    //     await getAllCategories()
-    // }
 
 
 
@@ -149,66 +149,101 @@ const CategoriesScreen = ({ jwt }) => {
     }, [])
 
     return (
-        <Container>
-            <h1>Pagina de Categorias</h1>
+        <Container className='contenedor-categorias'>
+            <h1 className='text-center'>Pagina de Categorias</h1>
 
             {/* FORMULARIO PARA CREAR CATEGORIA */}
 
-            <Button onClick={() => setShowForm(state => !state)}>Crear Categoria</Button>
-
-            <Form className='mb-5 categories__create-form' style={{ height: showForm ? "auto" : undefined }}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese una Categoria"
-                        value={nombre}
-                        onChange={handleChangeName}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Descripcion</Form.Label>
-                    <Form.Control
-                        type="text"
-                        as="textarea"
-                        placeholder="Ingrese una descripcion"
-                        value={descripcion}
-                        onChange={handleChangeDescription}
-                    />
-                </Form.Group>
-                <Button variant="success" onClick={handleSubmit}>Crear Categoria</Button>
-            </Form>
+            <Button
+                className='btn-solid mb-3'
+                onClick={handleShow}
+                style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}
+            >Agregar Categoria
+            </Button>
+            <Modal onHide={handleClose}
+                size="lg"
+                show={lgShow}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Agregar Categoria</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form className='categories__create-form'>
+                        <div className="input-field">
+                            <label className="input-label">
+                                Nombre
+                            </label>
+                            <FontAwesomeIcon className='i' icon={faTags} />
+                            <Form.Control
+                                type="text"
+                                placeholder="Ingrese una Categoria"
+                                value={nombre}
+                                onChange={handleChangeName}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <label className="input-label">
+                                Descripcion
+                            </label>
+                            <FontAwesomeIcon className='i' icon={faInfoCircle} />
+                            <Form.Control
+                                type="text"
+                                placeholder="Ingrese una descripcion"
+                                value={descripcion}
+                                onChange={handleChangeDescription}
+                            />
+                        </div>
+                    </Form>
+                </Modal.Body>
+                <div className='modalfooter'>
+                    <Button className='btn-solid' variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button className='btn-solid search' variant="success" onClick={handleSubmit}>Crear Producto</Button>
+                </div>
+            </Modal>
 
             {/* FORMULARIO PARA ACTUALIZAR CATEGORIA */}
             {
                 editarId.length > 0 && (
-                    <Form className='mb-5'>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Nombre</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Ingrese una Categoria"
-                                value={editarNombre}
-                                onChange={(event) => setEditarNombre(event.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Descripcion</Form.Label>
-                            <Form.Control
-                                type="text"
-                                as="textarea"
-                                placeholder="Ingrese una descripcion"
-                                value={editarDescripcion}
-                                onChange={(event) => setEditarDescripcion(event.target.value)}
-                            />
-                        </Form.Group>
-                        <Button variant="success" onClick={handleSubmitUpdate}>Actualizar Categoria</Button>
-                        <Button variant="danger" onClick={() => {
-                            setEditarId("")
-                            setEditarNombre("")
-                            setEditarDescripcion("")
-                        }}>Cancelar</Button>
-                    </Form>
+                    <Modal show={showEditModal} size='lg' onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Editar Producto</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form className='categories__create-form'>
+                                <div className="input-field">
+                                    <label className="input-label">
+                                        Nombre
+                                    </label>
+                                    <FontAwesomeIcon className='i' icon={faTags} />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese una Categoria"
+                                        value={editarNombre}
+                                        onChange={(event) => setEditarNombre(event.target.value)}
+                                    />
+                                </div>
+                                <div className="input-field">
+                                    <label className="input-label">
+                                        Descripcion
+                                    </label>
+                                    <FontAwesomeIcon className='i' icon={faInfoCircle} />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese una descripcion"
+                                        value={editarDescripcion}
+                                        onChange={(event) => setEditarDescripcion(event.target.value)}
+                                    />
+                                </div>
+                            </Form>
+                        </Modal.Body>
+                        <div className='modalfooter'>
+                            <Button className='btn-solid' variant="secondary" onClick={handleClose}>
+                                Cancelar
+                            </Button>
+                            <Button className='btn-solid search' variant="success" onClick={handleSubmitUpdate}>Actualizar Producto</Button>
+                        </div>
+                    </Modal>
                 )
             }
 
@@ -225,16 +260,17 @@ const CategoriesScreen = ({ jwt }) => {
                     {
                         categorias.map((categorias) => (
                             <tr key={categorias._id}>
-                                <td>{categorias.nombre}</td>
-                                <td>{categorias.descripcion}</td>
-                                <td>
-                                    <Button variant='danger' onClick={() => {
+                                <td data-label="Nombre">{categorias.nombre}</td>
+                                <td data-label="Descripcion">{categorias.descripcion}</td>
+                                <td className='buttons-actions'>
+                                    <Button className='btn-solid' variant='danger' onClick={() => {
                                         handleDeleteCategory(categorias._id)
                                     }}>Eliminar</Button>
-                                    <Button variant='warning' onClick={() => {
+                                    <Button className='btn-solid' variant='warning' onClick={() => {
                                         setEditarId(categorias._id)
                                         setEditarNombre(categorias.nombre)
                                         setEditarDescripcion(categorias.descripcion)
+                                        setShowEditModal(true);
                                     }}>Editar</Button>
                                 </td>
                             </tr>

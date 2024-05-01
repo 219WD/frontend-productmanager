@@ -14,6 +14,10 @@ const AdminScreen = () => {
     navigate('/admin/products');
   };
 
+  const redirectToAdminManagement = () => {
+    navigate('/admin/adminManagement');
+  };
+
   return (
     <Container>
       <div className="container-admin">
@@ -28,6 +32,10 @@ const AdminScreen = () => {
           <div className="action">
             <h5>Agregar o modificar un Producto</h5>
             <button className='btn transparent' onClick={redirectToProducts}>Productos</button>
+          </div>
+          <div className="action">
+            <h5>Promover o Degradar a Administradores</h5>
+            <button className='btn transparent' onClick={redirectToAdminManagement}>Administrar</button>
           </div>
         </div>
         </div>

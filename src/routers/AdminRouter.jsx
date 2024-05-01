@@ -4,7 +4,7 @@ import AdminScreen from '../pages/Admin/Admin';
 import PropTypes from "prop-types"
 import CategoriesScreen from '../pages/Categories';
 import ProductsScreen from '../pages/Products';
-import ProductosProximosAVencer from '../pages/ProductosVencimiento';
+import AdminManagement from '../pages/Admin/AdminManagment';
 
 function AdminRouter({ show = false, jwt }) {
     return show ? (
@@ -12,7 +12,7 @@ function AdminRouter({ show = false, jwt }) {
             <Route path="/" element={<AdminScreen />} />
             <Route path="/categorias" element={<CategoriesScreen jwt={jwt} />} />
             <Route path="/products" element={<ProductsScreen jwt={jwt} />} />
-            <Route path='/vencimiento' element={<ProductosProximosAVencer jwt={jwt} />} />
+            <Route path="/adminManagement" element={<AdminManagement jwt={jwt} />} />
         </Routes>
     ) : (
         <h1>Usted no tiene permiso de administrador</h1>
