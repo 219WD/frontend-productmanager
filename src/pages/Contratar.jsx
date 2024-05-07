@@ -1,7 +1,8 @@
-//No logre integrar MercadoPago esta muy mal el doc de mercadopago developers, perdon :'(
-import React, { useState } from 'react';
+import React from 'react';
 import Foto3 from '../assets/pexels-gustavo-fring-4173320.jpg';
 import API_URL from "../common/constants"
+import "./Contratar.css"
+
 
 
 const Contratar = () => {
@@ -20,37 +21,85 @@ const Contratar = () => {
             }
 
             const responseData = await response.json();
-            window.location.href = responseData;
+            window.location.href = responseData.result;
         } catch (error) {
             console.error("Error:", error.message);
         }
     };
 
     const servicio = {
-        nombre: "Stock Manager",
-        precio: 300000,
+        title: "Stock Manager",
+        unit_price: 900000,
+        currency_id: "ARS",
+        quantity: 1,
     };
 
     return (
-        <div className="service-container" data-aos="fade-up">
-            <h2>Contrata nuestro servicio</h2>
-            <div className="service-content">
-                <div className="cards-service" data-aos="fade-right">
-                    <div className="card card-service" style={{ height: "100%" }}>
-                        <h3>Compra nuestro servicio</h3>
-                        <p>{servicio.nombre}</p>
-                        <p>Adquirí nuestro servicio de forma definitiva con un gran descuento pagando de contado.</p>
-                        <ul>
-                            <li>Atención al cliente 24hs.</li>
-                            <li>Dominio y página .com.ar gratis.</li>
-                            <li>Mantenimiento constante.</li>
-                        </ul>
-                        <h5>PRECIO:</h5>
-                        <p>{`$ ${servicio.precio}`}</p>
-                        <button onClick={() => FuncionComprar(servicio)}>Comprar</button>
+        <div className="wrapper">
+            <div className="pricing-table gprice-single">
+                <div className="head">
+                    <h4 className="title">Suscribite a Stock Manager</h4>
+                </div>
+                <div className="content">
+                    <div className="price">
+                        <h1>$50.000</h1>
+                    </div>
+                    <ul>
+                        <li>Almacenamiento para 400.000 productos</li>
+                        <li>Atencion personalizada</li>
+                        <li><del>Dominio .com.ar</del></li>
+                        <li><del>Landing page con boton a whatsapp</del></li>
+                        <li><del>Constante mantenimiento</del></li>
+                        <li><del>Atencion al cliente 24hs</del></li>
+
+                    </ul>
+                    <div className="sign-up">
+                        <button className='btn-solid contratar' onClick={() => FuncionComprar(servicio)}>Comprar</button>
                     </div>
                 </div>
-                <img src={Foto3} alt="" style={{ width: "40%", height: "100%", borderRadius: "5px" }} data-aos="fade-left" />
+            </div>
+            <div className="pricing-table gprice-single">
+                <div className="head">
+                    <h4 className="title">Financia Stock Manager</h4>
+                    <p>En cuotas mensuales de $100.000</p>
+                </div>
+                <div className="content">
+                    <div className="price">
+                        <h1>$1.200.000</h1>
+                    </div>
+                    <ul>
+                        <li>Almacenamiento para 400.000 productos</li>
+                        <li>Atencion personalizada</li>
+                        <li>Dominio .com.ar</li>
+                        <li>Landing page con boton a whatsapp</li>
+                        <li>Constante mantenimiento</li>
+                        <li><del>Atencion al cliente 24hs</del></li>
+                    </ul>
+                    <div className="sign-up">
+                        <button className='btn-solid contratar' onClick={() => FuncionComprar(servicio)}>Comprar</button>
+                    </div>
+                </div>
+            </div>
+            <div className="pricing-table gprice-single">
+                <div className="head">
+                    <h4 className="title">Compra Stock Manager</h4>
+                </div>
+                <div className="content">
+                    <div className="price">
+                        <h1>{`$ ${servicio.unit_price}`}</h1>
+                    </div>
+                    <ul>
+                        <li>Almacenamiento para 400.000 productos</li>
+                        <li>Atencion personalizada</li>
+                        <li>Dominio .com.ar</li>
+                        <li>Landing page con boton a whatsapp</li>
+                        <li>Constante mantenimiento</li>
+                        <li>Atencion al cliente 24hs</li>
+                    </ul>
+                    <div className="sign-up">
+                        <button className='btn-solid contratar' onClick={() => FuncionComprar(servicio)}>Comprar</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from "react-bootstrap"
+import { Navigate, useNavigate } from 'react-router-dom';
 import Foto1 from "../assets/National Safety Month June 2019.jpg"
 import Foto2 from "../assets/Premium Photo _ Focused warehouse manager writing on clipboard.jpg"
 import Foto3 from "../assets/Mobile Mechanic or a Repair Shop which is the best choice.jpg"
@@ -16,6 +16,13 @@ const HomeScreen = () => {
   useEffect(() => {
     Aos.init()
   })
+
+  const navigate = useNavigate();
+
+  const redirectToContratar = () => {
+    navigate('/contratar');
+  };
+
   return (
     <div className='container-home'>
       <div className="hero">
@@ -105,7 +112,7 @@ const HomeScreen = () => {
                 <li>Dominio y pagina .com.ar gratis.</li>
                 <li>Mantenimiento constante.</li>
               </ul>
-              <button className='btn-solid contratar'>Contratar servicio</button>
+              <button className='btn-solid contratar' onClick={redirectToContratar}>Contratar servicio</button>
             </div>
             <div className="card card-service">
               <h3>Financia nuestro servicio</h3>
@@ -115,7 +122,7 @@ const HomeScreen = () => {
                 <li>Dominio y pagina .com.ar con un increible descuento.</li>
                 <li>Mantenimiento constante.</li>
               </ul>
-              <button className='btn-solid contratar'>Contratar servicio</button>
+              <button className='btn-solid contratar' onClick={redirectToContratar}>Contratar servicio</button>
             </div>
           </div>
           <img src={Foto3} className='foto3' alt="" data-aos="fade-left" />
