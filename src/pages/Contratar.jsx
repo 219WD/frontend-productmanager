@@ -1,5 +1,4 @@
 import React from 'react';
-import Foto3 from '../assets/pexels-gustavo-fring-4173320.jpg';
 import API_URL from "../common/constants"
 import "./Contratar.css"
 
@@ -29,7 +28,7 @@ const Contratar = () => {
 
     const servicio = {
         title: "Stock Manager",
-        unit_price: 900000,
+        unit_price: 500,
         currency_id: "ARS",
         quantity: 1,
     };
