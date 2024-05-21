@@ -9,7 +9,7 @@
 .contenedor-categorias{
   overflow: hidden;
 }
-.contenedor-categorias::before {
+.contenedor-products::before {
   content: '';
   position: absolute;
   width: 2000px;
