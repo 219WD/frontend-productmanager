@@ -92,5 +92,10 @@
   .btn-solid.search{
       font-size: 0.7rem;
   }
+  .input-label.vencimiento{
+    white-space: nowrap;
+    top: -25px;
+    left: 0;
+  }
 }
 
