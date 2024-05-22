@@ -481,8 +481,8 @@ const handleCloseSetProductsModal = () => {
                 <Modal.Body>
                     <Form className='categories__create-form'>
                         <div className="input-field">
-                            <label className="input-label vencimiento">Productos a mostrar:</label>
-                            <FontAwesomeIcon className='i' icon={faTags} />Cantidad productos
+                            <label className="input-label vencimiento">Cantidad productos:</label>
+                            <FontAwesomeIcon className='i' icon={faTags} />
                             <Form.Control
                                 type="number"
                                 placeholder='10'
