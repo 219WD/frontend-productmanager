@@ -93,7 +93,7 @@
       font-size: 0.7rem;
   }
   .categories__create-form.vencimiento{
-    gap: 5px;
+    gap: 10px;
   }
   .input-label.vencimiento{
     white-space: nowrap;
