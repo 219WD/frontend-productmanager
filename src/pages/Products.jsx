@@ -479,7 +479,7 @@ const handleCloseSetProductsModal = () => {
                     <Modal.Title>Administrar Vencimiento</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form className='categories__create-form'>
+                    <Form className='categories__create-form vencimiento'>
                         <div className="input-field">
                             <label className="input-label vencimiento">Cantidad productos:</label>
                             <FontAwesomeIcon className='i' icon={faTags} />
